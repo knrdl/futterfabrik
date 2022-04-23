@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Futterfabrik</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>
+        html {
+            background-color: #e9e9e9;
+        }
+
+        body {
+            font-family: Ubuntu, sans-serif;
+        }
+
+        .container {
+            max-width: 768px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 3px;
+        }
+
+        details {
+            padding-top: 2rem;
+            padding-bottom: .5rem;
+        }
+
+        summary {
+            cursor: pointer;
+            font-weight: bold;
+            font-size: larger;
+        }
+
+        summary:hover {
+            color: teal;
+        }
+
+        details > div {
+            margin: 1.25rem 1rem .5rem 1rem;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .field {
+            margin-bottom: .33rem;
+        }
+
+        .field > label.pre {
+            min-width: 6rem;
+            display: inline-block;
+            text-align: right;
+        }
+
+        .field > input {
+            margin-left: .5rem;
+            margin-right: .5rem;
+        }
+
+        .field > label.post {
+            color: #777;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            html {
+                background-color: #111;
+            }
+
+            body {
+                color: #ccc;
+            }
+
+            .container {
+                background-color: #333;
+            }
+
+            input {
+                background: #333;
+                color: white;
+                border: 1px solid gray;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Futterfabrik</h1>
+    <p>RSS / JSON Feed Generator</p>
+    {% for feed in feeds %}
+        <details>
+            <summary>{{ feed.title }}</summary>
+            <div>
+                {% if feed.description %}
+                    <p>{{ feed.description }}</p>
+                {% endif %}
+                <p>
+                    {% for field in feed.fields %}
+                        <div class="field">
+                            <label class="pre" for="{{ field.name }}">{{ field.title }}</label>
+                            <input type="{{ field.type }}" name="{{ field.name }}" title="{{ field.title }}"
+                                    {% if field.required %}
+                                   required="required" placeholder="erforderlich"
+                                    {% else %}
+                                   placeholder="optional"
+                                    {% endif %}
+                                    {% if field.min %} min="{{ field.min }}" {% endif %}
+                            />
+                            <label class="post" for="{{ field.name }}">{{ field.info }}</label>
+                        </div>
+                    {% endfor %}
+                </p>
+            </div>
+        </details>
+    {% endfor %}
+</div>
+</body>
+</html>
