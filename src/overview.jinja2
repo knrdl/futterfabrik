@@ -13,8 +13,17 @@
             font-family: Ubuntu, sans-serif;
         }
 
+        a {
+            color: teal;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
         .container {
-            max-width: 768px;
+            max-width: 500px;
             margin: 2rem auto;
             padding: 1rem;
             background-color: white;
@@ -56,8 +65,19 @@
             margin-right: .5rem;
         }
 
+        input:invalid {
+            border: 1px solid red;
+        }
+
         .field > label.post {
             color: #777;
+        }
+
+        .feed-links a {
+            margin-left: 1rem;
+            margin-right: 1rem;
+            font-size: large;
+            display: inline-block;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -85,6 +105,9 @@
 <div class="container">
     <h1>Futterfabrik</h1>
     <p>RSS / JSON Feed Generator</p>
+    <noscript>
+        <div style="color:red">Javascript is disabled</div>
+    </noscript>
     {% for feed in feeds %}
         <details>
             <summary>{{ feed.title }}</summary>
@@ -92,25 +115,41 @@
                 {% if feed.description %}
                     <p>{{ feed.description }}</p>
                 {% endif %}
-                <p>
-                    {% for field in feed.fields %}
-                        <div class="field">
-                            <label class="pre" for="{{ field.name }}">{{ field.title }}</label>
-                            <input type="{{ field.type }}" name="{{ field.name }}" title="{{ field.title }}"
-                                    {% if field.required %}
-                                   required="required" placeholder="erforderlich"
-                                    {% else %}
-                                   placeholder="optional"
-                                    {% endif %}
-                                    {% if field.min %} min="{{ field.min }}" {% endif %}
-                            />
-                            <label class="post" for="{{ field.name }}">{{ field.info }}</label>
-                        </div>
-                    {% endfor %}
+                {% for field in feed.fields %}
+                    <div class="field">
+                        <label class="pre" for="{{ field.name }}">{{ field.title }}</label>
+                        <input type="{{ field.type }}" name="{{ field.name }}" title="{{ field.title }}"
+                               autocomplete="off"
+                                {% if field.required %}
+                               required="required"
+                                {% else %}
+                               placeholder="optional"
+                                {% endif %}
+                                {% if field.min %} min="{{ field.min }}" {% endif %}
+                               oninput='updateUrls({{ feed.name | tojson }})'
+                               data-feed="{{ feed.name }}" data-field="{{ field.name }}"
+                        />
+                        <label class="post" for="{{ field.name }}">{{ field.info }}</label>
+                    </div>
+                {% endfor %}
+                <p class="feed-links">
+                    <a data-feed="{{ feed.name }}" data-format="rss" href="{{ build_feed_url('rss', feed) }}"
+                       target="_blank" rel="noopener noreferrer">RSS</a>
+                    <a data-feed="{{ feed.name }}" data-format="json" href="{{ build_feed_url('json', feed) }}"
+                       target="_blank" rel="noopener noreferrer">JSON Feed</a>
                 </p>
             </div>
         </details>
     {% endfor %}
 </div>
+<script>
+    function updateUrls(feedName) {
+        const params = new URLSearchParams()
+        document.querySelectorAll('input[data-feed="' + feedName + '"]')
+            .forEach(el => params.set(el.dataset.field, el.value))
+        document.querySelectorAll('a[data-feed="' + feedName + '"]')
+            .forEach(el => el.href = el.href.split('?')[0] + '?' + params.toString())
+    }
+</script>
 </body>
 </html>

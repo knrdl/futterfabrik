@@ -21,5 +21,6 @@ fields = [{
 }]
 
 
-def generate():
+def generate(search, location, radius=''):
+    print('search', search, 'location', location, 'radius', radius)
     return 'blub'  # todo

@@ -2,6 +2,9 @@
 from http import server
 import socketserver
 import traceback
+from urllib.parse import urlsplit, parse_qsl
+
+from feeds import feed_list, get_feed_module
 from overview import gen_overview
 
 
@@ -18,11 +21,17 @@ class FeedHandler(server.BaseHTTPRequestHandler):
 
     def do_GET(self):
         try:
-            path = self.path.strip() or '/'
-            if path == '/':
+            url = urlsplit(self.path.strip() or '/')
+            if url.path == '/':
                 self.send(gen_overview(), code=200, mime='text/html')
             else:
-                pass  # todo
+                if url.path.endswith('.rss') or url.path.endswith('.json'):
+                    feed_name = url.path.rsplit('.')[0].removeprefix('/')
+                    if feed_name in feed_list:
+                        mod = get_feed_module(feed_name)
+                        params = dict(parse_qsl(url.query))
+                        print(getattr(mod, 'generate')(**params))  # todo
+            self.send('404 not found', code=404, mime='text/plain')
         except Exception as e:
             traceback.print_exc()
             self.send(str(e), code=500, mime='text/plain')
