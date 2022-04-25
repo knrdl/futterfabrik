@@ -4,7 +4,7 @@ ENV PYTHONIOENCODING=utf-8
 ENV PYTHONUNBUFFERED=1
 
 # allow non privileged user to run server on port 80
-RUN apk add --no-cache libxml2 libxslt libcap && \
+RUN apk add --no-cache libxml2-dev libxslt-dev libcap && \
     setcap 'cap_net_bind_service=+ep' "$(readlink -f "$(which python3)")" && \
     apk del libcap
 
