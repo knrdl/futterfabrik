@@ -120,8 +120,8 @@
                 {% endif %}
                 {% for field in feed.fields %}
                     <div class="field">
-                        <label class="pre" for="{{ field.name }}">{{ field.title }}</label>
-                        <input type="{{ field.type }}" name="{{ field.name }}" title="{{ field.title }}"
+                        <label class="pre" for="{{ feed.name }}-{{ field.name }}">{{ field.title }}</label>
+                        <input type="{{ field.type }}" name="{{ feed.name }}-{{ field.name }}" title="{{ field.title }}"
                                autocomplete="off"
                                 {% if field.required %}
                                required="required"
@@ -134,7 +134,7 @@
                                oninput='updateUrls({{ feed.name | tojson }})'
                                data-feed="{{ feed.name }}" data-field="{{ field.name }}"
                         />
-                        <label class="post" for="{{ field.name }}">{{ field.info }}</label>
+                        <label class="post" for="{{ feed.name }}-{{ field.name }}">{{ field.info }}</label>
                     </div>
                 {% endfor %}
                 <p class="feed-links">
