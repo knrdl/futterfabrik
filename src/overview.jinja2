@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Futterfabrik</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel='icon' type='image/png'
+          href='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABVklEQVR42u3bvUrDUBjG8eec2EFcdXTy4w68CsVBcNALcHJSHMWiF6CDk5t3IlScRCRF0A51kFAQKxREyUdzvAVjQ5pw/s+ekPyS9z1vQmJO25dOHmemG776fP6y8jwAAAAAAAAAAIDHk2BpkrNz2lxfU2CqO/jhYKCb25d6ACysLGl3Z6PSq9d/CicGKK0ErDGV376OHgAAAAAAAEA95oCiSeJEuZtsIYvjpKEALtbR3omiUTrZfoxkrWkgQO6U5k42MPQAAAAAAAD/5gAbaHl1UfNxVnwByZ36vUiZazKAaengeP/fm1+0z3TXHflbAkEroAcAAAAAAADgK0CZX3VN6Y1Qpqvza71/xcVnKBk9h58NBxhnenzo6eN7TAkAAAAAAAAAAAAAAAAAAABMI6U9DQ7fInU697J/IDUu1U9aj3+1zPbWoaMEAAAAAAAAAAAAADzMLzAcUw+W/R9qAAAAAElFTkSuQmCC'>
     <style>
         html {
             background-color: #e9e9e9;
@@ -23,7 +25,7 @@
         }
 
         .container {
-            max-width: 500px;
+            max-width: 666px;
             margin: 2rem auto;
             padding: 1rem;
             background-color: white;
@@ -31,7 +33,7 @@
         }
 
         details {
-            padding-top: 2rem;
+            margin-bottom: 1rem;
             padding-bottom: .5rem;
         }
 
@@ -63,10 +65,11 @@
         .field > input {
             margin-left: .5rem;
             margin-right: .5rem;
+            min-width: 15rem;
         }
 
         input:invalid {
-            border: 1px solid red;
+            border: 1px solid #ff3333;
         }
 
         .field > label.post {
@@ -74,8 +77,8 @@
         }
 
         .feed-links a {
-            margin-left: 1rem;
-            margin-right: 1rem;
+            margin-left: .5rem;
+            margin-right: .5rem;
             font-size: large;
             display: inline-block;
         }
@@ -106,7 +109,7 @@
     <h1>Futterfabrik</h1>
     <p>RSS / JSON Feed Generator</p>
     <noscript>
-        <div style="color:red">Javascript is disabled</div>
+        <p style="color:red">Javascript is disabled</p>
     </noscript>
     {% for feed in feeds %}
         <details>
@@ -122,9 +125,11 @@
                                autocomplete="off"
                                 {% if field.required %}
                                required="required"
-                                {% else %}
+                                {% elif not field.placeholder %}
                                placeholder="optional"
                                 {% endif %}
+                                {% if field.placeholder %} placeholder="{{ field.placeholder }}" {% endif %}
+                                {% if field.pattern %} pattern="{{ field.pattern }}" {% endif %}
                                 {% if field.min %} min="{{ field.min }}" {% endif %}
                                oninput='updateUrls({{ feed.name | tojson }})'
                                data-feed="{{ feed.name }}" data-field="{{ field.name }}"
@@ -137,6 +142,10 @@
                        target="_blank" rel="noopener noreferrer">RSS</a>
                     <a data-feed="{{ feed.name }}" data-format="json" href="{{ build_feed_url('json', feed) }}"
                        target="_blank" rel="noopener noreferrer">JSON Feed</a>
+                    {% if feed.homepage %}
+                        <a href="{{ feed.homepage }}"
+                           target="_blank" rel="noopener noreferrer">Homepage</a>
+                    {% endif %}
                 </p>
             </div>
         </details>

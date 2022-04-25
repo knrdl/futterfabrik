@@ -17,9 +17,10 @@ def get_feed_metadata(name: str):
     mod = get_feed_module(name)
     return {
         'name': name,
-        'title': getattr(mod, 'title') if hasattr(mod, 'title') else name.title(),
-        'description': getattr(mod, 'description') if hasattr(mod, 'description') else '',
-        'fields': getattr(mod, 'fields') if hasattr(mod, 'description') else []
+        'homepage': getattr(mod, 'HOMEPAGE') if hasattr(mod, 'HOMEPAGE') else '',
+        'title': getattr(mod, 'TITLE') if hasattr(mod, 'TITLE') else name.title(),
+        'description': getattr(mod, 'DESCRIPTION') if hasattr(mod, 'DESCRIPTION') else '',
+        'fields': getattr(mod, 'FIELDS') if hasattr(mod, 'FIELDS') else []
     }
 
 

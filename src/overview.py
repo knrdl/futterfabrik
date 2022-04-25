@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import re
 from collections import OrderedDict
 from typing import Literal
 from urllib.parse import urlencode
@@ -18,7 +17,7 @@ def build_feed_url(feed_format: Literal['rss', 'json'], feed_metadata):
 
 
 def gen_overview():
-    return re.sub(r'\r?\n\s*', ' ', template.render(
+    return template.render(
         feeds=[get_feed_metadata(feed) for feed in feed_list],
         build_feed_url=build_feed_url
-    ))
+    )

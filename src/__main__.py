@@ -21,20 +21,28 @@ class FeedHandler(server.BaseHTTPRequestHandler):
 
     def do_GET(self):
         try:
-            url = urlsplit(self.path.strip() or '/')
+            query_line = self.path.strip() or '/'
+            url = urlsplit(query_line)
             if url.path == '/':
-                self.send(gen_overview(), code=200, mime='text/html')
+                return self.send(gen_overview(), code=200, mime='text/html')
             else:
                 if url.path.endswith('.rss') or url.path.endswith('.json'):
                     feed_name = url.path.rsplit('.')[0].removeprefix('/')
                     if feed_name in feed_list:
                         mod = get_feed_module(feed_name)
                         params = dict(parse_qsl(url.query))
-                        print(getattr(mod, 'generate')(**params))  # todo
-            self.send('404 not found', code=404, mime='text/plain')
+                        feed = getattr(mod, 'generate')(**params)
+                        if url.path.endswith('.rss'):
+                            return self.send(feed.as_rss(), code=200, mime='application/rss+xml; charset=utf-8')
+                        else:
+                            return self.send(feed.as_json_feed(), code=200, mime='application/feed+json; charset=utf-8')
+            return self.send('404 not found', code=404, mime='text/plain')
         except Exception as e:
             traceback.print_exc()
-            self.send(str(e), code=500, mime='text/plain')
+            return self.send(str(e), code=500, mime='text/plain')
+
+    def version_string(self):  # overwrite Server response header
+        return 'Futterfabrik'
 
 
 class FeedServer(socketserver.ThreadingMixIn, server.HTTPServer):
