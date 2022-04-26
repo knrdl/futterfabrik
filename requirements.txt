@@ -2,5 +2,4 @@ requests==2.*
 beautifulsoup4==4.*
 Jinja2==2.*
 feedgenerator==2.*
-lxml==4.*
 MarkupSafe==2.0.*

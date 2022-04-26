@@ -117,7 +117,7 @@ def get_ads(sess, loc_id, *, search='', radius=None, max_pages=2):
     page = 1
     while True:
         src = fetch_page(sess, loc_id, search=search, radius=radius, page=page)
-        soup = BeautifulSoup(src, 'lxml')
+        soup = BeautifulSoup(src)
         if ads_item := soup.find('ul', {'id': 'srchrslt-adtable'}):
             for ad_item in ads_item.findAll('li'):
                 if ad := parse_ad(ad_item):

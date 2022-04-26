@@ -28,7 +28,7 @@ def generate(url: str) -> Feed:
         description='ARD Mediathek'
     )
 
-    for ent in BeautifulSoup(requests.get(url).text, 'lxml').findAll('a'):
+    for ent in BeautifulSoup(requests.get(url).text).findAll('a'):
         link = ent.get('href') or ''
         if link.startswith('/video/'):
             link = 'https://www.ardmediathek.de' + link
