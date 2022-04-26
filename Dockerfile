@@ -1,12 +1,14 @@
-FROM python:3-alpine
+FROM python:3-slim
 
 ENV PYTHONIOENCODING=utf-8
 ENV PYTHONUNBUFFERED=1
 
 # allow non privileged user to run server on port 80
-RUN apk add --no-cache libxml2-dev libxslt-dev libcap && \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends libcap2-bin && \
     setcap 'cap_net_bind_service=+ep' "$(readlink -f "$(which python3)")" && \
-    apk del libcap
+    apt-get purge libcap2-bin && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN adduser --home /home/futterfabrik --disabled-password --shell /bin/false --uid 1000 futterfabrik
 ENV PATH "/home/futterfabrik/.local/bin:$PATH"

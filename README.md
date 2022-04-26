@@ -1,2 +1,7 @@
 # futterfabrik
-A news feed generator for (mostly) german websites
+
+News feed generator for (mostly) german websites
+
+* ARD Mediathek
+* ebay Kleinanzeigen
+* SRF.CH Audio
