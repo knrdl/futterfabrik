@@ -7,7 +7,7 @@ ENV PYTHONUNBUFFERED=1
 RUN apt-get update && \
     apt-get install -y --no-install-recommends libcap2-bin && \
     setcap 'cap_net_bind_service=+ep' "$(readlink -f "$(which python3)")" && \
-    apt-get purge libcap2-bin && \
+    apt-get purge -y libcap2-bin && \
     rm -rf /var/lib/apt/lists/*
 
 RUN adduser --home /home/futterfabrik --disabled-password --shell /bin/false --uid 1000 futterfabrik

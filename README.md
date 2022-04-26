@@ -5,3 +5,29 @@ News feed generator for (mostly) german websites
 * ARD Mediathek
 * ebay Kleinanzeigen
 * SRF.CH Audio
+
+## Deployment
+
+via Docker Compose / Swarm
+
+```yaml
+version: '3.9'
+
+services:
+  futterfabrik:
+    image: ghcr.io/knrdl/futterfabrik:edge
+    hostname: futterfabrik
+    environment:
+      BASE_URL: https://example.org # used for feed urls generation
+    ports:
+      - "80:80"
+    deploy:
+      replicas: 1
+      update_config:
+        order: start-first
+      resources:
+        reservations:
+          memory: 40m
+        limits:
+          memory: 200m
+```
