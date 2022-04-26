@@ -5,7 +5,7 @@ ENV PYTHONUNBUFFERED=1
 
 # allow non privileged user to run server on port 80
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends libcap2-bin && \
+    apt-get install -y --no-install-recommends libxml2 libxslt1.1 libcap2-bin && \
     setcap 'cap_net_bind_service=+ep' "$(readlink -f "$(which python3)")" && \
     apt-get purge -y libcap2-bin && \
     rm -rf /var/lib/apt/lists/*
