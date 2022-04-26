@@ -6,6 +6,8 @@ News feed generator for (mostly) german websites
 * ebay Kleinanzeigen
 * SRF.CH Audio
 
+See also: [RSS Bridge](https://github.com/RSS-Bridge/rss-bridge)
+
 ## Deployment
 
 via Docker Compose / Swarm

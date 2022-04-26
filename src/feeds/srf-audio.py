@@ -32,7 +32,7 @@ def generate(url: str):
         title = ent.find('h4', {'class': 'media-caption__title media-caption__title--audio'}).text.strip()
         url = ent.find('a', {'class': 'medium__caption--link'}).get('href')
         feed.add_item(
-            title=f'{feed.title}: {title}',
+            title=title,
             url=url,
             body=f'<a href="{_(url)}">Link</a>',
             unique_id=url
