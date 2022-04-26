@@ -19,7 +19,7 @@ version: '3.9'
 
 services:
   futterfabrik:
-    image: ghcr.io/knrdl/futterfabrik:edge
+    image: ghcr.io/knrdl/futterfabrik
     hostname: futterfabrik
     environment:
       BASE_URL: https://example.org # used for feed urls generation
