@@ -3,6 +3,7 @@
 News feed generator for (mostly) german websites
 
 * ARD Mediathek
+* Demos in Berlin
 * ebay Kleinanzeigen
 * getnext.to
 * picuki (instagram)
