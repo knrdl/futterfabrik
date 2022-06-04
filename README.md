@@ -31,7 +31,7 @@ services:
         order: start-first
       resources:
         reservations:
-          memory: 40m
+          memory: 20m
         limits:
           memory: 200m
 ```

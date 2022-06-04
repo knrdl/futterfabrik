@@ -128,6 +128,7 @@
                                 {% elif not field.placeholder %}
                                placeholder="optional"
                                 {% endif %}
+                                {% if field.default %} value="{{ field.default }}" {% endif %}
                                 {% if field.placeholder %} placeholder="{{ field.placeholder }}" {% endif %}
                                 {% if field.pattern %} pattern="{{ field.pattern }}" {% endif %}
                                 {% if field.min %} min="{{ field.min }}" {% endif %}
