@@ -13,7 +13,8 @@ FIELDS = [{
     'title': 'URL der Seite zur Sendung',
     'type': 'url',
     'required': True,
-    'pattern': 'https://www.ardmediathek.de/sendung/'
+    'placeholder': 'https://www.ardmediathek.de/sendung/...',
+    'pattern': 'https://www.ardmediathek.de/sendung/.+'
 }]
 
 

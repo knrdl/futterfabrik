@@ -26,7 +26,7 @@ def generate(url: str):
 
     _ = html.escape
 
-    page = requests.get('https://www.srf.ch/audio/maloney').text
+    page = requests.get(url).text
     ents = BeautifulSoup(page).findAll('div', {'class': ['episode-listing']})
     for ent in ents:
         title = ent.find('h4', {'class': 'media-caption__title media-caption__title--audio'}).text.strip()
