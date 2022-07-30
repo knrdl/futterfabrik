@@ -6,7 +6,6 @@ News feed generator for (mostly) german websites
 * Demos in Berlin
 * ebay Kleinanzeigen
 * getnext.to
-* picuki (instagram)
 * SRF.CH Audio
 
 See also: [RSS Bridge](https://github.com/RSS-Bridge/rss-bridge)
