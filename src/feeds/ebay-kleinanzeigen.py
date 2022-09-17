@@ -78,7 +78,8 @@ def parse_ad(ent):
         title_div = ent.find('h2')
         if title_div:
             title = title_div.text.strip()
-        price_div = ent.find('p', {'class': 'aditem-main--middle--price'})
+        price_div = ent.find('p', {'class': 'aditem-main--middle--price'}) or \
+                    ent.find('p', {'class': 'aditem-main--middle--price-shipping--price'})
         if price_div:
             price = price_div.text.strip()
         else:

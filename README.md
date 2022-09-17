@@ -22,7 +22,7 @@ services:
     image: ghcr.io/knrdl/futterfabrik
     hostname: futterfabrik
     environment:
-      BASE_URL: https://example.org # used for feed urls generation
+      BASE_URL: https://futterfabrik.yourdomain.com # used for feed urls generation
     ports:
       - "80:80"
     deploy:
