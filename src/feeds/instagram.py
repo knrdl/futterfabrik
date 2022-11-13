@@ -2,6 +2,8 @@ import html
 
 import requests
 from bs4 import BeautifulSoup
+
+from config import common_headers
 from feedgen import Feed
 
 TITLE = 'Instagram'
@@ -23,7 +25,7 @@ def generate(account: str):
         description='Instagram'
     )
 
-    src = requests.get(feed.site_url).text
+    src = requests.get(feed.site_url, headers=common_headers).text
 
     for post in BeautifulSoup(src).find('ul', {'class': 'profile-box-photos'}).findChildren("li", recursive=False):
         if img := post.find('img', {'class': 'post-image'}):

@@ -6,7 +6,9 @@ News feed generator for (mostly) german websites
 * Demos in Berlin
 * ebay Kleinanzeigen
 * getnext.to
+* Instagram
 * SRF.CH Audio
+* TikTok
 
 See also: [RSS Bridge](https://github.com/RSS-Bridge/rss-bridge)
 

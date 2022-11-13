@@ -4,6 +4,7 @@ import requests
 import html
 import os
 
+from config import common_headers
 from feedgen import Feed
 
 TITLE = 'ebay Kleinanzeigen'
@@ -29,23 +30,10 @@ FIELDS = [{
     'info': 'Kilometer'
 }]
 
-headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:79.0) Gecko/20100101 Firefox/79.0',
-    'Referer': 'https://www.ebay-kleinanzeigen.de/',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-    'Accept-Encoding': 'gzip, deflate, br',
-    'Accept-Language': 'de,en-US;q=0.7,en;q=0.3',
-    'Cache-Control': 'max-age=0',
-    'Connection': 'keep-alive',
-    'DNT': '1',
-    'TE': 'Trailers',
-    'Upgrade-Insecure-Requests': '1'
-}
-
 
 def location_id(sess, location_term):
     res = sess.get('https://www.ebay-kleinanzeigen.de/s-ort-empfehlungen.json?query=%s' % location_term,
-                   headers=headers)
+                   headers=common_headers)
     assert res.ok, res.text
     loc_id = list(res.json().keys())[0].replace('_', '')
     return loc_id
@@ -60,7 +48,7 @@ def fetch_page(sess, loc_id, *, search='', page=1, radius=None):
     url = url.replace('/seite:1/', '/')
     if radius:
         url += f'r{radius}'
-    res = sess.get(url, headers=headers)
+    res = sess.get(url, headers=common_headers)
     assert res.ok, res.text
     return res.text
 
@@ -109,7 +97,7 @@ def has_next_page(soup):
 
 def make_session():
     sess = requests.Session()
-    res = sess.get('https://www.ebay-kleinanzeigen.de', headers=headers)
+    res = sess.get('https://www.ebay-kleinanzeigen.de', headers=common_headers)
     assert res.ok, res.text
     return sess
 
