@@ -3,4 +3,3 @@ beautifulsoup4==4.*
 Jinja2==3.*
 feedgenerator==2.*
 MarkupSafe==2.0.*
-lxml==4.*

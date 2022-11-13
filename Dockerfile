@@ -3,9 +3,6 @@ FROM python:3-alpine
 ENV PYTHONIOENCODING=utf-8
 ENV PYTHONUNBUFFERED=1
 
-# use fast lxml parser
-RUN apk add --no-cache libcap libxslt libxml2
-
 # allow non privileged user to run server on port 80
 RUN apk add --no-cache libcap && \
     setcap 'cap_net_bind_service=+ep' "$(readlink -f "$(which python3)")" && \
