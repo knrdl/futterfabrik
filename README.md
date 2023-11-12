@@ -1,3 +1,5 @@
+# MIGRATED TO [RSS Bridge](https://github.com/RSS-Bridge/rss-bridge)
+
 # futterfabrik
 
 News feed generator for (mostly) german websites
